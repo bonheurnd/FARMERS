@@ -52,6 +52,18 @@ export const api = {
       body: JSON.stringify({ userId, role }),
     }),
 
+  // Health
+  getHealth: () =>
+    fetchJson<{
+      status: string;
+      scheme: string;
+      district?: string;
+      timezone?: string;
+      version?: string;
+      database?: string;
+      isDemoMode?: boolean;
+    }>('/health'),
+
   // Metrics
   getMetrics: () => fetchJson<SchemeMetrics>('/metrics'),
 

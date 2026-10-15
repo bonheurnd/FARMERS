@@ -670,9 +670,9 @@ async function startServer() {
     res.json(auditLogs);
   });
 
-  // Mount Vite middleware in development
+  // Mount Vite middleware in development with HMR disabled to prevent WebSocket dropped connection errors
   const vite = await createViteServer({
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, hmr: false },
     appType: 'spa',
   });
   app.use(vite.middlewares);

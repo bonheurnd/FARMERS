@@ -8,6 +8,8 @@ import { Navbar } from './components/Navbar.tsx';
 import { Sidebar } from './components/Sidebar.tsx';
 import { MobileNav } from './components/MobileNav.tsx';
 import { OfflineIndicator } from './components/OfflineIndicator.tsx';
+import { HealthCheckComponent } from './components/HealthCheckComponent.tsx';
+import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 import { DashboardView } from './components/DashboardView.tsx';
 import { FarmersView } from './components/FarmersView.tsx';
 import { PlotsView } from './components/PlotsView.tsx';
@@ -240,7 +242,8 @@ export default function App() {
         />
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full pb-20 lg:pb-8">
-          {currentTab === 'dashboard' && (
+          <ErrorBoundary language={language} onReset={loadData}>
+            {currentTab === 'dashboard' && (
             <DashboardView
               metrics={metrics}
               schedules={schedules}
@@ -354,6 +357,7 @@ export default function App() {
               onSubmitComplaintOnline={handleSubmitComplaint}
             />
           )}
+          </ErrorBoundary>
         </main>
       </div>
 
@@ -364,6 +368,9 @@ export default function App() {
         language={language}
         currentRole={currentUser.role}
       />
+
+      {/* Background Backend Health Check & Monitoring Toast */}
+      <HealthCheckComponent language={language} />
 
       {/* Floating Offline Notification & Sync Alert */}
       <OfflineIndicator />

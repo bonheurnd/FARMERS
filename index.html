@@ -18,6 +18,19 @@
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
   </head>
   <body>
+    <script>
+      // Gracefully prevent unhandled rejections from Vite HMR websocket drops in AI Studio iframe
+      window.addEventListener('unhandledrejection', function (event) {
+        if (
+          event &&
+          event.reason &&
+          (String(event.reason).includes('WebSocket') ||
+            (event.reason.message && event.reason.message.includes('WebSocket')))
+        ) {
+          event.preventDefault();
+        }
+      });
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
